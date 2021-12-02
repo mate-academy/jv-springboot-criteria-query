@@ -13,4 +13,6 @@ For example to save 200 phone send following GET request:```http://localhost:808
 - Send GET request to fetch some filtered data. For example:
     - to fetch all phones produced my Apple: `http://localhost:8080/phones?makerIn=Apple`
     - to fetch all blue or green phones produced my Samsung: `http://localhost:8080/phones?makerIn=Samsung&colorIn=blue,green`
+    - to fetch all yellow phones produced my Apple with `flash` feature: `http://localhost:8080/phones?featureIn=flash&makerIn=Apple&colorIn=yellow`
 - Pay attention to `mate.academy.springboot.criteriaquery.repository.specification.phone.PhoneMakerInSpecification` class, where INNER JOIN is implemented
+- Pay attention to `mate.academy.springboot.criteriaquery.repository.specification.phone.PhoneFeatureInSpecification` class, where Set<Feature> is used in filtering

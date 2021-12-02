@@ -18,6 +18,11 @@ public class MakerServiceImpl implements MakerService {
     }
 
     @Override
+    public Maker findById(Long id) {
+        return makerRepository.getById(id);
+    }
+
+    @Override
     public Maker findByName(String name) {
         return makerRepository.findByName(name);
     }

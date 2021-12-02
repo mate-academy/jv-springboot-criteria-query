@@ -12,10 +12,10 @@ public class PhoneColorInSpecification implements SpecificationProvider<Phone> {
     private static final String FIELD_NAME = "color";
 
     @Override
-    public Specification<Phone> getSpecification(String[] makers) {
+    public Specification<Phone> getSpecification(String[] colors) {
         return (root, query, cb) -> {
             CriteriaBuilder.In<String> predicate = cb.in(root.get(FIELD_NAME));
-            for (String value : makers) {
+            for (String value : colors) {
                 predicate.value(value);
             }
             return cb.and(predicate, predicate);
