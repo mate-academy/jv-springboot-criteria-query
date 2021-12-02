@@ -4,7 +4,6 @@ In this repo you can find the example how to configure CriteriaQuery and use it 
 Also, you can check more details in [this article](https://spring.io/blog/2011/04/26/advanced-spring-data-jpa-specifications-and-querydsl/).
 
 #### NOTE: in this repo are not covered the following cases:
-- join fetch
 - CriteriaBuilder `or` case. But we are using `in` predicate, so pay attention to this.
 
 ### How to start?
@@ -14,3 +13,4 @@ For example to save 200 phone send following GET request:```http://localhost:808
 - Send GET request to fetch some filtered data. For example:
     - to fetch all phones produced my Apple: `http://localhost:8080/phones?makerIn=Apple`
     - to fetch all blue or green phones produced my Samsung: `http://localhost:8080/phones?makerIn=Samsung&colorIn=blue,green`
+- Pay attention to `mate.academy.springboot.criteriaquery.repository.specification.phone.PhoneMakerInSpecification` class, where INNER JOIN is implemented

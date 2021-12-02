@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import mate.academy.springboot.criteriaquery.dto.PhoneRequestDto;
 import mate.academy.springboot.criteriaquery.dto.PhoneResponseDto;
 import mate.academy.springboot.criteriaquery.dto.mapper.PhoneMapper;
+import mate.academy.springboot.criteriaquery.model.Maker;
 import mate.academy.springboot.criteriaquery.model.Phone;
+import mate.academy.springboot.criteriaquery.service.MakerService;
 import mate.academy.springboot.criteriaquery.service.PhoneService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,24 +23,39 @@ import org.springframework.web.bind.annotation.RestController;
 public class PhoneController {
     private final PhoneMapper phoneMapper;
     private final PhoneService phoneService;
+    private final MakerService makerService;
 
-    public PhoneController(PhoneMapper phoneMapper, PhoneService phoneService) {
+    public PhoneController(PhoneMapper phoneMapper, PhoneService phoneService,
+                           MakerService makerService) {
         this.phoneMapper = phoneMapper;
         this.phoneService = phoneService;
+        this.makerService = makerService;
     }
 
     @GetMapping("/inject")
     public String inject(@RequestParam(defaultValue = "100") Integer count) {
+        if (makerService.findByName("Apple") == null) {
+            saveMakers();
+        }
         String[] colors = {"red", "blue", "green", "yellow", "purple"};
         String[] makers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
         for (int i = 0; i < count; i++) {
             Phone phone = new Phone();
-            phone.setMaker(makers[new Random().nextInt(makers.length)]);
+            phone.setMaker(makerService.findByName(makers[new Random().nextInt(makers.length)]));
             phone.setModel(UUID.randomUUID().toString());
             phone.setColor(colors[new Random().nextInt(colors.length)]);
             phoneService.save(phone);
         }
         return "Created " + count + " phones!";
+    }
+
+    private void saveMakers() {
+        String[] makers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
+        for (String name : makers) {
+            Maker maker = new Maker();
+            maker.setName(name);
+            makerService.save(maker);
+        }
     }
 
     @PostMapping
