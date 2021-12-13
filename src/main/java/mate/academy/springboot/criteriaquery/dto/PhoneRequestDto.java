@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class PhoneRequestDto {
     private String model;
-    private Long makerId;
+    private Long manufacturerId;
     private Set<Long> featureIds;
     private String color;
     private String countryManufactured;

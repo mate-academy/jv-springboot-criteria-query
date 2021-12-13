@@ -21,7 +21,7 @@ public class Phone {
     private Long id;
     private String model;
     @ManyToOne
-    private Maker maker;
+    private Manufacturer manufacturer;
     @ManyToMany
     @JoinTable(name = "phone_feature",
             joinColumns = @JoinColumn(name = "phone_id"),

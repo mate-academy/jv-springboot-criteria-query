@@ -7,7 +7,7 @@ import lombok.Data;
 public class PhoneResponseDto {
     private Long id;
     private String model;
-    private MakerResponseDto maker;
+    private ManufacturerResponseDto manufacturer;
     private Set<FeatureResponseDto> features;
     private String color;
     private String countryManufactured;

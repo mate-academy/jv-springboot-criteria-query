@@ -11,10 +11,10 @@ import mate.academy.springboot.criteriaquery.dto.PhoneRequestDto;
 import mate.academy.springboot.criteriaquery.dto.PhoneResponseDto;
 import mate.academy.springboot.criteriaquery.dto.mapper.PhoneMapper;
 import mate.academy.springboot.criteriaquery.model.Feature;
-import mate.academy.springboot.criteriaquery.model.Maker;
+import mate.academy.springboot.criteriaquery.model.Manufacturer;
 import mate.academy.springboot.criteriaquery.model.Phone;
 import mate.academy.springboot.criteriaquery.service.FeatureService;
-import mate.academy.springboot.criteriaquery.service.MakerService;
+import mate.academy.springboot.criteriaquery.service.ManufacturerService;
 import mate.academy.springboot.criteriaquery.service.PhoneService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,14 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class PhoneController {
     private final PhoneMapper phoneMapper;
     private final PhoneService phoneService;
-    private final MakerService makerService;
+    private final ManufacturerService manufacturerService;
     private final FeatureService featureService;
 
     public PhoneController(PhoneMapper phoneMapper, PhoneService phoneService,
-                           MakerService makerService, FeatureService featureService) {
+                           ManufacturerService manufacturerService, FeatureService featureService) {
         this.phoneMapper = phoneMapper;
         this.phoneService = phoneService;
-        this.makerService = makerService;
+        this.manufacturerService = manufacturerService;
         this.featureService = featureService;
     }
 
@@ -43,11 +43,11 @@ public class PhoneController {
         if (featureService.findByName("NFS") == null) {
             saveFeatures();
         }
-        if (makerService.findByName("Apple") == null) {
-            saveMakers();
+        if (manufacturerService.findByName("Apple") == null) {
+            saveManufacturers();
         }
         String[] features = {"NFC", "autofocus", "flash", "stabilization"};
-        String[] makers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
+        String[] manufacturers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
         String[] colors = {"red", "blue", "green", "yellow", "purple"};
         Set<Feature> featureSet = new HashSet<>();
         for (int i = 0; i < count; i++) {
@@ -56,7 +56,8 @@ public class PhoneController {
                 featureSet.add(feature);
             }
             Phone phone = new Phone();
-            phone.setMaker(makerService.findByName(makers[new Random().nextInt(makers.length)]));
+            phone.setManufacturer(manufacturerService.findByName(
+                    manufacturers[new Random().nextInt(manufacturers.length)]));
             phone.setFeatures(featureSet);
             phone.setModel(UUID.randomUUID().toString());
             phone.setColor(colors[new Random().nextInt(colors.length)]);
@@ -74,12 +75,12 @@ public class PhoneController {
         }
     }
 
-    private void saveMakers() {
-        String[] makers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
-        for (String name : makers) {
-            Maker maker = new Maker();
-            maker.setName(name);
-            makerService.save(maker);
+    private void saveManufacturers() {
+        String[] manufacturers = {"Apple", "Xiaomi", "Samsung", "Nokia", "Google"};
+        for (String name : manufacturers) {
+            Manufacturer manufacturer = new Manufacturer();
+            manufacturer.setName(name);
+            manufacturerService.save(manufacturer);
         }
     }
 
